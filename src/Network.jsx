@@ -3,10 +3,10 @@ import * as d3 from "d3";
 
 export default function Network() {
   const chartRef = useRef(null);
-  const isLocal = true;
+  const isLocal = false;
   const localURL = "/graph.json";
   const jsonURL =
-    "https://mlschuenemann.github.io/initiative-mapping-data/graph.json";
+    "https://mlschuenemann.github.io/tawasol-network/graph.json";
   let globalData;
 
   // Global filters state stored outside React state for now.
