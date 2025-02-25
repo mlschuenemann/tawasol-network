@@ -1,0 +1,254 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "title": "Yellow Tape",
+      "web-links": "https://helloworld.com",
+      "org_type": "Music-Collective",
+      "location": "Cairo",
+      "members": "2-10",
+      "directed_to": "Scene",
+      "description": "An experimental music collective pushing the boundaries of sound and performance in urban spaces.",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "2",
+      "title": "Ahmed Squar",
+      "web-links": "https://helloworld.com",
+      "org_type": "",
+      "location": "Cairo",
+      "members": "",
+      "directed_to": "",
+      "description": "A multidisciplinary collective exploring intersections between urban space, performance, and activism.",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "3",
+      "title": "Cyrine Gherssi",
+      "web-links": "https://helloworld.com",
+      "org_type": "",
+      "location": "Cairo",
+      "members": "",
+      "directed_to": "",
+      "description": "An independent artist and curator fostering experimental art practices and community engagement.",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "4",
+      "title": "ARD",
+      "web-links": "https://helloworld.com",
+      "org_type": "Residency Facilitator",
+      "location": "Cairo",
+      "members": "",
+      "directed_to": "Dedicated Group",
+      "description": "A residency program supporting emerging artists in developing new work through collaboration and mentorship.",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "5",
+      "title": "DEBO",
+      "web-links": "https://helloworld.com",
+      "org_type": "Music-Collective",
+      "location": "Cairo",
+      "members": "10-20",
+      "directed_to": "Public Audience",
+      "description": "A dynamic group of musicians blending traditional sounds with modern beats to create immersive experiences.",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "6",
+      "title": "El Warcha",
+      "web-links": "https://helloworld.com",
+      "org_type": "Art-Intervention Collective",
+      "location": "Tunis",
+      "members": "10-20",
+      "directed_to": "Local Environment",
+      "description": "An art collective focused on community-based interventions and participatory creative projects.",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "7",
+      "title": "MOSHTRQ",
+      "web-links": "https://helloworld.com",
+      "org_type": "Music-Collective",
+      "location": "Cairo",
+      "members": "",
+      "directed_to": "",
+      "description": "An emerging music collective creating experimental soundscapes and collaborative performances.",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "8",
+      "title": "Adel Abdelwahab",
+      "web-links": "https://helloworld.com",
+      "org_type": "",
+      "location": "Cairo",
+      "members": "",
+      "directed_to": "",
+      "description": "An independent curator and researcher exploring contemporary art and its social impact.",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "9",
+      "title": "USG Social",
+     "web-links": "https://helloworld.com",
+     "org_type": "",
+      "location": "Cairo",
+      "members": "",
+      "directed_to": "",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "10",
+      "title": "Interference",
+     "web-links": "https://helloworld.com",
+     "org_type": "Art-Intervention Collective",
+      "location": "Tunis",
+      "members": "10-20",
+      "directed_to": "Local Enviornment",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "11",
+      "title": "Mouhit",
+     "web-links": "https://helloworld.com",
+     "org_type": "Residency Facilitator",
+      "location": "Tunis",
+      "members": "2-10",
+      "directed_to": "Dedicated Group",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    },
+    {
+      "id": "12",
+      "title": "Bléch Esm",
+     "web-links": "https://helloworld.com",
+     "org_type": "",
+      "location": "Cairo",
+      "members": "",
+      "directed_to": "",
+      "style": {
+        "radius": 30,
+        "stroke_width": 6.25,
+        "y_label": -42.5,
+        "color": "#ffffff",
+        "stroke_color": "#000",
+        "font_size": 30,
+        "font_color": "#333333",
+        "font_weight": "normal"
+      }
+    }
+
+  ],
+  "links": [
+    { "source": "9", "target": "10" },
+    { "source": "9", "target": "11" },
+    { "source": "9", "target": "12" },
+    { "source": "1", "target": "12" },
+    { "source": "2", "target": "10" },
+    { "source": "3", "target": "10" },
+    { "source": "4", "target": "10" },
+    { "source": "5", "target": "11" },
+    { "source": "6", "target": "12" },
+    { "source": "7", "target": "12" },
+    { "source": "8", "target": "11" }
+  ]
+}
