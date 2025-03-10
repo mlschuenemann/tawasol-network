@@ -50,7 +50,7 @@
       "size": "2-10",
       "engaged_towards": ["Artistic Practice", "Public"],
       "description": "Art institution specializing in contemporary art practices, engaging with both the local and international art scenes. Dedicated towards supporting and networking across art practitioners.",
-      "genre": ["Fine Art / Suport and Network"],
+      "genre": ["Fine Art", "Suport and Network"],
       "resource_origin": "Grants / Comercial Practice",
       "style": {
         "radius": 30,
@@ -71,7 +71,7 @@
       "size": "10-20",
       "engaged_towards": ["Community", "Artistic Practice", "Public"],
       "description": "Hip Hop music collective, known for its presence in both the underground and commercial music scenes. Famous across a broad audience for their close to life lyrics and collective expression.",
-      "genre": ["Music / Suport and Network"],
+      "genre": ["Music" , "Suport and Network"],
       "resource_origin": "Comercial Practice",
       "style": {
         "radius": 30,
@@ -92,7 +92,7 @@
       "size": "10-20",
       "engaged_towards": ["Artistic Practice"],
       "description": "Community-oriented space for collective action and learning through bridging art and everyday life. Creation of 'social furniture' as process oriented engagement with their environment.",
-      "genre": ["Community Engagement / Fine Art / Public Art"],
+      "genre": ["Community Engagement", "Fine Art",  "Public Art"],
       "resource_origin": "Grants",
       "style": {
         "radius": 30,
@@ -176,7 +176,7 @@
       "size": "2-10",
       "engaged_towards": ["Ressource"],
       "description": "Facilitator of Artistic Residencies and Networking Opportunities. Providing of a residency-hub as a networking opportunity for the local Art Scene.",
-      "genre": ["Fine Art / Suport and Network"],
+      "genre": ["Fine Art",  "Suport and Network"],
       "resource_origin": "Grants / Comercial Practice",
       "style": {
         "radius": 30,
