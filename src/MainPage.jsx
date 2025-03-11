@@ -6,14 +6,20 @@ const MainPage = () => {
   return (
     <>
       <div className="p-4 flex flex-wrap gap-4">
-        <select id="location-filter" className="border border-gray-300 rounded p-2">
-          <option value="">All Locations</option>
+        <select id="country-filter" className="border border-gray-300 rounded p-2">
+          <option value="">All Countries</option>
         </select>
-        <select id="members-filter" className="border border-gray-300 rounded p-2">
-          <option value="">All Member Sizes</option>
+
+        <select id="engaged-towards-filter" className="border border-gray-300 rounded p-2">
+          <option value="">All Engaged Towards</option>
         </select>
-        <select id="directed-to-filter" className="border border-gray-300 rounded p-2">
-          <option value="">All Directed To</option>
+
+        <select id="genre-filter" className="border border-gray-300 rounded p-2">
+          <option value="">All Genres</option>
+        </select>
+
+        <select id="size-filter" className="border border-gray-300 rounded p-2">
+          <option value="">All Sizes</option>
         </select>
       </div>
 
