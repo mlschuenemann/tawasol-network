@@ -72,6 +72,28 @@ export default function Network() {
     }
   }
 
+  let globalStatementsData = {};
+
+  async function fetchGlossaryData() {
+    try {
+      const response = await fetch("https://mlschuenemann.github.io/tawasol-network/glossary.json");
+      globalStatementsData = await response.json();
+    } catch (error) {
+      console.error("Error fetching the glossary data:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchGlossaryData();
+  }, []);
+
+  function fetchStatementsForNode(nodeTitle) {
+    return globalStatementsData.statements
+      .filter(statement => statement.collective === nodeTitle)
+      .map(statement => `<div class='statement-category'><strong>${statement.keyword}:</strong> ${statement.content}</div>`)
+      .join("<br>") || "No statements available.";
+  }
+
   function populateFilters(data) {
     const countries = new Set();
     const sizes = new Set();
@@ -79,10 +101,11 @@ export default function Network() {
     const genres = new Set();
 
     data.nodes.forEach((node) => {
-      if (node.location) countries.add(node.location);
-      if (node.size) sizes.add(node.size);
-      if (node.engaged_towards) node.engaged_towards.forEach(e => engagedTowards.add(e));
-      if (node.genre) node.genre.forEach(g => genres.add(g));
+
+      if (node.location) locations.add(node.location);
+      if (node.size) members.add(node.size);
+      if (node.engaged_towards) node.engaged_towards.forEach((engaged) => directedTos.add(engaged));
+
     });
 
     const countrySelect = document.getElementById("country-filter");
@@ -107,27 +130,33 @@ export default function Network() {
     [...genres].sort().forEach((genre) => {
       genreSelect.add(new Option(genre, genre));
     });
+
   }
 
   function onFilterChange(e) {
     const { id, value } = e.target;
-    if (id === "country-filter") {
+
+
+    if (id === "location-filter") {
       filters.location = value;
-    } else if (id === "size-filter") {
+    } else if (id === "members-filter") {
       filters.size = value;
-    } else if (id === "engaged-towards-filter") {
-      filters.engaged_towards = value;
-    } else if (id === "genre-filter") {
-      filters.genre = value;
+    } else if (id === "directed-to-filter") {
+      filters.engaged_towards = value === "" ? "" : value;
+
     }
+
     updatePlugin(globalData, filters);
   }
+
+
 
   function updatePlugin(data, filters) {
     d3.select(chartRef.current).selectAll("svg").remove();
 
     const filteredNodes = data.nodes.filter((d) => {
       const matchLocation = filters.location ? d.location === filters.location : true;
+
       const matchSize = filters.size ? d.size === filters.size : true;
       const matchEngaged = filters.engaged_towards ? d.engaged_towards.includes(filters.engaged_towards) : true;
       const matchGenre = filters.genre ? d.genre.includes(filters.genre) : true;
@@ -143,8 +172,10 @@ export default function Network() {
   }
 
   function chart(data) {
-    const width = 1908;
-    const height = 1400;
+
+    const width = 2100;
+    const height = 1200;
+
     const links = data.links.map((d) => ({ ...d }));
     const nodes = data.nodes.map((d) => ({ ...d }));
 
@@ -157,7 +188,7 @@ export default function Network() {
           .id((d) => d.id)
           .distance(300)
       )
-      .force("charge", d3.forceManyBody().strength(-3000))
+      .force("charge", d3.forceManyBody().strength(-2500))
       .force("collide", d3.forceCollide().radius((d) => (d.style?.radius || 10) + 10))
       .force("x", d3.forceX().strength(0.05))
       .force("y", d3.forceY().strength(0.05));
@@ -173,7 +204,7 @@ export default function Network() {
     const g = svg.append("g");
 
     svg.call(
-      d3.zoom().scaleExtent([0.5, 10]).on("zoom", (event) => {
+      d3.zoom().scaleExtent([0.9, 1.2]).on("zoom", (event) => {
         g.attr("transform", event.transform);
       })
     );
@@ -201,6 +232,7 @@ export default function Network() {
           window.open(d.web_links, "_blank");
         }
         updateInfoPanel(d);
+
       });
 
     const labels = g
@@ -331,6 +363,7 @@ export default function Network() {
       </div>
       <div class="info-field">
         <span class="info-label">Genre:</span> ${node.genre ? node.genre.join(", ") : "N/A"}
+
       </div>
       <div class="info-field">
         <span class="info-label">Resource Origin:</span> ${node.resource_origin || "N/A"}
@@ -339,17 +372,25 @@ export default function Network() {
         <span class="info-label">Description:</span>
         <p>${node.description || "No description provided."}</p>
       </div>
-      <div class="info-field">
-        <span class="info-label">Web Links:</span>
-        ${node["web-links"] ? `<a href="${node["web-links"]}" target="_blank">${node["web-links"]}</a>` : "N/A"}
-      </div>
-      <div class="info-field">
-        <span class="info-label">Statements:</span>
-        <p>${statements}</p>
-      </div>
+
+
     `;
+    displayNodeStatements(node.title);
+  }
+
+  function displayNodeStatements(nodeTitle) {
+    const statementsContainer = document.getElementById("statements-container");
+    if (!statementsContainer) return;
+
+    const nodeStatements = globalStatementsData.statements
+      .filter(statement => statement.collective === nodeTitle)
+      .map(statement => `<div class='statement-content'><strong>${statement.keyword}:</strong> ${statement.content}</div>`)
+      .join("<br>") || "No statements available for this node.";
+
+    statementsContainer.innerHTML = `<h3>Statements for ${nodeTitle}</h3>${nodeStatements}`;
   }
 
 
-  return <div id="chart" ref={chartRef} className="border border-gray-200 bg-white shadow-md m-4" />;
+  return <div id="chart" ref={chartRef}  />;
+
 }
