@@ -50,6 +50,28 @@ export default function Network() {
     }
   }
 
+  let globalStatementsData = {};
+
+  async function fetchGlossaryData() {
+    try {
+      const response = await fetch("https://mlschuenemann.github.io/tawasol-network/glossary.json");
+      globalStatementsData = await response.json();
+    } catch (error) {
+      console.error("Error fetching the glossary data:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchGlossaryData();
+  }, []);
+
+  function fetchStatementsForNode(nodeTitle) {
+    return globalStatementsData.statements
+      .filter(statement => statement.collective === nodeTitle)
+      .map(statement => `<div class='statement-category'><strong>${statement.keyword}:</strong> ${statement.content}</div>`)
+      .join("<br>") || "No statements available.";
+  }
+
   function populateFilters(data) {
     const locations = new Set();
     const members = new Set();
@@ -57,8 +79,8 @@ export default function Network() {
 
     data.nodes.forEach((node) => {
       if (node.location) locations.add(node.location);
-      if (node.members) members.add(node.members);
-      if (node.directed_to) directedTos.add(node.directed_to);
+      if (node.size) members.add(node.size);
+      if (node.engaged_towards) node.engaged_towards.forEach((engaged) => directedTos.add(engaged));
     });
 
     const locationSelect = document.getElementById("location-filter");
@@ -88,19 +110,24 @@ export default function Network() {
       option.textContent = dir;
       directedSelect.appendChild(option);
     });
+
   }
 
   function onFilterChange(e) {
     const { id, value } = e.target;
+
     if (id === "location-filter") {
       filters.location = value;
     } else if (id === "members-filter") {
-      filters.members = value;
+      filters.size = value;
     } else if (id === "directed-to-filter") {
-      filters.directed_to = value;
+      filters.engaged_towards = value === "" ? "" : value;
     }
+
     updatePlugin(globalData, filters);
   }
+
+
 
   function updatePlugin(data, filters) {
     // Remove existing svg if present.
@@ -109,8 +136,8 @@ export default function Network() {
     // Filter nodes based on filters
     const filteredNodes = data.nodes.filter((d) => {
       const matchLocation = filters.location ? d.location === filters.location : true;
-      const matchMembers = filters.members ? d.members === filters.members : true;
-      const matchDirected = filters.directed_to ? d.directed_to === filters.directed_to : true;
+      const matchMembers = filters.size ? d.size === filters.size : true;
+      const matchDirected = filters.engaged_towards ? d.engaged_towards.includes(filters.engaged_towards) : true;
       return matchLocation && matchMembers && matchDirected;
     });
 
@@ -129,8 +156,8 @@ export default function Network() {
   }
 
   function chart(data) {
-    const width = 1908;
-    const height = 1600;
+    const width = 2100;
+    const height = 1200;
     const links = data.links.map((d) => ({ ...d }));
     const nodes = data.nodes.map((d) => ({ ...d }));
 
@@ -143,7 +170,7 @@ export default function Network() {
           .id((d) => d.id)
           .distance(300)
       )
-      .force("charge", d3.forceManyBody().strength(-3000))
+      .force("charge", d3.forceManyBody().strength(-2500))
       .force("collide", d3.forceCollide().radius((d) => (d.style?.radius || 10) + 10))
       .force("x", d3.forceX().strength(0.05))
       .force("y", d3.forceY().strength(0.05));
@@ -159,7 +186,7 @@ export default function Network() {
     const g = svg.append("g");
 
     svg.call(
-      d3.zoom().scaleExtent([0.5, 10]).on("zoom", (event) => {
+      d3.zoom().scaleExtent([0.9, 1.2]).on("zoom", (event) => {
         g.attr("transform", event.transform);
       })
     );
@@ -187,6 +214,7 @@ export default function Network() {
           window.open(d.web_links, "_blank");
         }
         updateInfoPanel(d);
+
       });
 
     const labels = g
@@ -303,30 +331,44 @@ export default function Network() {
 
   function updateInfoPanel(node) {
     const infoContent = document.getElementById("info-content");
+    const statements = fetchStatementsForNode(node.title);
     infoContent.innerHTML = `
       <div class="info-title">${node.title}</div>
-      <div class="info-field">
-        <span class="info-label">Org Type:</span> ${node.org_type || "N/A"}
-      </div>
       <div class="info-field">
         <span class="info-label">Location:</span> ${node.location || "N/A"}
       </div>
       <div class="info-field">
-        <span class="info-label">Members:</span> ${node.members || "N/A"}
+        <span class="info-label">Size:</span> ${node.size || "N/A"}
       </div>
       <div class="info-field">
-        <span class="info-label">Directed To:</span> ${node.directed_to || "N/A"}
+        <span class="info-label">Engaged Towards:</span> ${node.engaged_towards ? node.engaged_towards.join(", ") : "N/A"}
+      </div>
+      <div class="info-field">
+        <span class="info-label">Genre:</span> ${node.genre ? node.genre.join(", ") : "N/A"}
+      </div>
+      <div class="info-field">
+        <span class="info-label">Resource Origin:</span> ${node.resource_origin || "N/A"}
       </div>
       <div class="info-field">
         <span class="info-label">Description:</span>
         <p>${node.description || "No description provided."}</p>
       </div>
-      <div class="info-field">
-        <span class="info-label">Web Links:</span>
-        ${node["web-links"] ? `<a href="${node["web-links"]}" target="_blank">${node["web-links"]}</a>` : "N/A"}
-      </div>
+
     `;
+    displayNodeStatements(node.title);
   }
 
-  return <div id="chart" ref={chartRef} className="border border-gray-200 bg-white shadow-md m-4" />;
+  function displayNodeStatements(nodeTitle) {
+    const statementsContainer = document.getElementById("statements-container");
+    if (!statementsContainer) return;
+
+    const nodeStatements = globalStatementsData.statements
+      .filter(statement => statement.collective === nodeTitle)
+      .map(statement => `<div class='statement-content'><strong>${statement.keyword}:</strong> ${statement.content}</div>`)
+      .join("<br>") || "No statements available for this node.";
+
+    statementsContainer.innerHTML = `<h3>Statements for ${nodeTitle}</h3>${nodeStatements}`;
+  }
+
+  return <div id="chart" ref={chartRef}  />;
 }
