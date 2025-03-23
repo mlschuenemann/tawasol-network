@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 
-export default function Network() {
+export default function Network({ onNodeSelect, setStatementsData }) {
+
   const chartRef = useRef(null);
   const isLocal = false;
   const localURL = "/graph.json";
@@ -77,11 +78,13 @@ export default function Network() {
   async function fetchGlossaryData() {
     try {
       const response = await fetch("https://mlschuenemann.github.io/tawasol-network/glossary.json");
-      globalStatementsData = await response.json();
+      const data = await response.json();
+      setStatementsData(data.statements || []);
     } catch (error) {
       console.error("Error fetching the glossary data:", error);
     }
   }
+
 
   useEffect(() => {
     fetchGlossaryData();
@@ -348,34 +351,9 @@ export default function Network() {
   }
 
   function updateInfoPanel(node) {
-    const infoContent = document.getElementById("info-content");
-    const statements = fetchStatementsForNode(node.title);
-    infoContent.innerHTML = `
-      <div class="info-title">${node.title}</div>
-      <div class="info-field">
-        <span class="info-label">Location:</span> ${node.location || "N/A"}
-      </div>
-      <div class="info-field">
-        <span class="info-label">Size:</span> ${node.size || "N/A"}
-      </div>
-      <div class="info-field">
-        <span class="info-label">Engaged Towards:</span> ${node.engaged_towards ? node.engaged_towards.join(", ") : "N/A"}
-      </div>
-      <div class="info-field">
-        <span class="info-label">Genre:</span> ${node.genre ? node.genre.join(", ") : "N/A"}
 
-      </div>
-      <div class="info-field">
-        <span class="info-label">Resource Origin:</span> ${node.resource_origin || "N/A"}
-      </div>
-      <div class="info-field">
-        <span class="info-label">Description:</span>
-        <p>${node.description || "No description provided."}</p>
-      </div>
+    onNodeSelect(node);
 
-
-    `;
-    displayNodeStatements(node.title);
   }
 
   function displayNodeStatements(nodeTitle) {
@@ -391,6 +369,9 @@ export default function Network() {
   }
 
 
-  return <div id="chart" ref={chartRef}  />;
+  return     <>
+  <div id="chart" ref={chartRef} />
+
+</>
 
 }

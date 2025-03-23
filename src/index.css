@@ -3,38 +3,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-#container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-#chart {
-  flex: 2;
-}
-#info-panel {
-  flex: 1;
-  margin-left: 20px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  max-width: 400px;
-}
-/* Styles for the filter controls */
-.filters {
-  margin-bottom: 1em;
-}
-.filters select {
-  margin-right: 1em;
-  padding: 0.25em;
-}
-/* Optional: styles for the info panel content */
-.info-title {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.info-field {
-  margin: 0.5em 0;
-}
-.info-label {
-  font-weight: bold;
-}
