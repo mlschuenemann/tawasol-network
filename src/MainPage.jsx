@@ -9,17 +9,25 @@ const MainPage = () => {
   const [statementsData, setStatementsData] = useState([]);
 
   return (
+
     <div className="container mx-auto p-4">
       {/* Filters Section */}
       <div className="filters flex flex-wrap gap-4 justify-center">
         <select id="location-filter" className="border border-gray-300 rounded p-2">
           <option value="">All Locations</option>
+
         </select>
-        <select id="members-filter" className="border border-gray-300 rounded p-2">
-          <option value="">All Member Sizes</option>
+
+        <select id="engaged-towards-filter" className="border border-gray-300 rounded p-2">
+          <option value="">All Engaged Towards</option>
         </select>
-        <select id="directed-to-filter" className="border border-gray-300 rounded p-2">
-          <option value="">All Directed To</option>
+
+        <select id="genre-filter" className="border border-gray-300 rounded p-2">
+          <option value="">All Genres</option>
+        </select>
+
+        <select id="size-filter" className="border border-gray-300 rounded p-2">
+          <option value="">All Sizes</option>
         </select>
         <select id="genre-filter" className="border border-gray-300 rounded p-2">
     <option value="">All Genres</option>
