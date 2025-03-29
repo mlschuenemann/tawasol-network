@@ -35,8 +35,8 @@
         "radius": 30,
         "stroke_width": 6.25,
         "y_label": -42.5,
-        "color": "#ffffff",
-        "stroke_color": "#888",
+        "color": "#008236",
+        "stroke_color": "#008236",
         "font_size": 30,
         "font_color": "#333333",
         "font_weight": "normal"
