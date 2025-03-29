@@ -29,6 +29,9 @@ const MainPage = () => {
         <select id="size-filter" className="border border-gray-300 rounded p-2">
           <option value="">All Sizes</option>
         </select>
+        <select id="genre-filter" className="border border-gray-300 rounded p-2">
+    <option value="">All Genres</option>
+  </select>
       </div>
 
       {/* Responsive Grid Layout */}
@@ -55,13 +58,11 @@ const MainPage = () => {
 
       {/* Statements Section */}
       <div id="statements-container" className="mt-4 p-4 border border-gray-200 bg-white shadow-md">
-        {selectedNode ? (
-          <Statements title={selectedNode.title} statements={statementsData} />
-        ) : (
-          <div className="text-gray-700">
-            Click on a node to see related statements here.
-          </div>
-        )}
+      <h3 className="text-xl font-bold text-gray-900 border-b pb-2 mb-4">
+        Glossary of collective infrastructure
+      </h3>
+      <Statements title={selectedNode?.title} statements={statementsData} />
+
       </div>
     </div>
   );

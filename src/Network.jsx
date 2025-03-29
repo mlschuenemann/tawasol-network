@@ -15,27 +15,34 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     location: "",
     members: "",
     directed_to: "",
+    genre: "",
   };
 
   useEffect(() => {
     fetchData();
 
-    const countrySelect = document.getElementById("country-filter");
-    const sizeSelect = document.getElementById("size-filter");
-    const engagedSelect = document.getElementById("engaged-towards-filter");
+    // Also set up filter change event listeners.
+    // (If you want to manage these via React, consider adding state instead.)
+    const locationSelect = document.getElementById("location-filter");
+    const membersSelect = document.getElementById("members-filter");
+    const directedSelect = document.getElementById("directed-to-filter");
     const genreSelect = document.getElementById("genre-filter");
 
-    countrySelect.addEventListener("change", onFilterChange);
-    sizeSelect.addEventListener("change", onFilterChange);
-    engagedSelect.addEventListener("change", onFilterChange);
+    locationSelect.addEventListener("change", onFilterChange);
+    membersSelect.addEventListener("change", onFilterChange);
+    directedSelect.addEventListener("change", onFilterChange);
     genreSelect.addEventListener("change", onFilterChange);
 
     return () => {
-      countrySelect.removeEventListener("change", onFilterChange);
-      sizeSelect.removeEventListener("change", onFilterChange);
-      engagedSelect.removeEventListener("change", onFilterChange);
+
+      locationSelect.removeEventListener("change", onFilterChange);
+      membersSelect.removeEventListener("change", onFilterChange);
+      directedSelect.removeEventListener("change", onFilterChange);
       genreSelect.removeEventListener("change", onFilterChange);
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   let globalStatementsData = {};
@@ -98,10 +105,12 @@ export default function Network({ onNodeSelect, setStatementsData }) {
   }
 
   function populateFilters(data) {
-    const countries = new Set();
-    const sizes = new Set();
-    const engagedTowards = new Set();
+
+    const locations = new Set();
+    const members = new Set();
+    const directedTos = new Set();
     const genres = new Set();
+
 
     data.nodes.forEach((node) => {
 
@@ -109,16 +118,20 @@ export default function Network({ onNodeSelect, setStatementsData }) {
       if (node.size) members.add(node.size);
       if (node.engaged_towards) node.engaged_towards.forEach((engaged) => directedTos.add(engaged));
 
+      if (node.genre && Array.isArray(node.genre)) {
+        node.genre.forEach((g) => genres.add(g));
+      }
     });
 
-    const countrySelect = document.getElementById("country-filter");
-    const sizeSelect = document.getElementById("size-filter");
-    const engagedSelect = document.getElementById("engaged-towards-filter");
+    const locationSelect = document.getElementById("location-filter");
+    const membersSelect = document.getElementById("members-filter");
+    const directedSelect = document.getElementById("directed-to-filter");
     const genreSelect = document.getElementById("genre-filter");
 
-    countrySelect.innerHTML = `<option value="">All Countries</option>`;
-    sizeSelect.innerHTML = `<option value="">All Sizes</option>`;
-    engagedSelect.innerHTML = `<option value="">All Engaged Towards</option>`;
+    // Clear previous options (except the default)
+    locationSelect.innerHTML = `<option value="">All Locations</option>`;
+    membersSelect.innerHTML = `<option value="">All Member Sizes</option>`;
+    directedSelect.innerHTML = `<option value="">All Directed To</option>`;
     genreSelect.innerHTML = `<option value="">All Genres</option>`;
 
     [...countries].sort().forEach((loc) => {
@@ -134,6 +147,14 @@ export default function Network({ onNodeSelect, setStatementsData }) {
       genreSelect.add(new Option(genre, genre));
     });
 
+[...genres].sort().forEach((genre) => {
+  const option = document.createElement("option");
+  option.value = genre;
+  option.textContent = genre;
+  genreSelect.appendChild(option);
+});
+
+
   }
 
   function onFilterChange(e) {
@@ -147,7 +168,11 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     } else if (id === "directed-to-filter") {
       filters.engaged_towards = value === "" ? "" : value;
 
+    } else if (id === "genre-filter") {
+      filters.genre = value;
+
     }
+
 
     updatePlugin(globalData, filters);
   }
@@ -159,12 +184,15 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
     const filteredNodes = data.nodes.filter((d) => {
       const matchLocation = filters.location ? d.location === filters.location : true;
-
-      const matchSize = filters.size ? d.size === filters.size : true;
-      const matchEngaged = filters.engaged_towards ? d.engaged_towards.includes(filters.engaged_towards) : true;
-      const matchGenre = filters.genre ? d.genre.includes(filters.genre) : true;
-      return matchLocation && matchSize && matchEngaged && matchGenre;
+      const matchMembers = filters.size ? d.size === filters.size : true;
+      const matchDirected = filters.engaged_towards ? d.engaged_towards.includes(filters.engaged_towards) : true;
+      const matchGenre = filters.genre
+      ? d.genre && d.genre.includes(filters.genre)
+      : true;
+      return matchLocation && matchMembers && matchDirected && matchGenre;
     });
+
+
 
     const nodeIds = new Set(filteredNodes.map((n) => n.id));
     const filteredLinks = data.links.filter((l) => nodeIds.has(l.source) && nodeIds.has(l.target));
