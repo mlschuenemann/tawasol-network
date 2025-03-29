@@ -3,7 +3,7 @@
     {
       "id": "1",
       "title": "Yellow Tape Records",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://scenenoise.com/Features/yellow-tape-records-culture-the-artistic-haven-bringing-a-modern-vinyl-shopping-experience-to-cairo",
       "location": "Cairo",
       "size": "2-10",
       "engaged_towards": ["Community", "Artistic Practice"],
@@ -24,7 +24,7 @@
     {
       "id": "2",
       "title": "Cyrine Gherssi",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://zat.lartrue.org/en/en-contributors-zat/en-cyrine-ghrissi",
       "location": "Cairo",
       "size": "Individual Practitioner",
       "engaged_towards": ["Ressource"],
@@ -36,7 +36,7 @@
         "stroke_width": 6.25,
         "y_label": -42.5,
         "color": "#ffffff",
-        "stroke_color": "#000",
+        "stroke_color": "#888",
         "font_size": 30,
         "font_color": "#333333",
         "font_weight": "normal"
@@ -45,7 +45,7 @@
     {
       "id": "3",
       "title": "ARD Art Institution",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://ard-art.org/",
       "location": "Cairo",
       "size": "2-10",
       "engaged_towards": ["Artistic Practice", "Public"],
@@ -66,7 +66,7 @@
     {
       "id": "4",
       "title": "DEBO",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://www.instagram.com/debotunis/",
       "location": "Cairo",
       "size": "10-20",
       "engaged_towards": ["Community", "Artistic Practice", "Public"],
@@ -87,7 +87,7 @@
     {
       "id": "5",
       "title": "El Warcha",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://www.elwarcha.org/",
       "location": "Tunis",
       "size": "10-20",
       "engaged_towards": ["Artistic Practice"],
@@ -108,7 +108,7 @@
     {
       "id": "6",
       "title": "MOSHTRQ",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://scenenoise.com/Features/MOSHTRQ-Envisage-The-Left-Field-Soundtrack-to-Cairo",
       "location": "Cairo",
       "size": "2-10",
       "engaged_towards": ["Artistic Practice", "Public"],
@@ -129,7 +129,7 @@
     {
       "id": "7",
       "title": "Underground Social",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://www.instagram.com/ug.social/?hl=de",
       "location": "Cairo",
       "size": "2-10",
       "engaged_towards": ["Ressource"],
@@ -150,7 +150,7 @@
     {
       "id": "8",
       "title": "Interference Light Art",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://intunis.net/",
       "location": "Tunis",
       "size": "10-20",
       "engaged_towards": ["Local Environment"],
@@ -171,7 +171,7 @@
     {
       "id": "9",
       "title": "Mouhit",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://mouhit.space/",
       "location": "Tunis",
       "size": "2-10",
       "engaged_towards": ["Ressource"],
@@ -192,7 +192,7 @@
     {
       "id": "10",
       "title": "Bléch Esm",
-      "web-links": "https://helloworld.com",
+      "web-links": "https://www.facebook.com/blecheseem/",
       "location": "Cairo",
       "size": "Unknown",
       "engaged_towards": ["Artistic Practice", "Public"],
