@@ -4,10 +4,9 @@ import * as d3 from "d3";
 export default function Network({ onNodeSelect, setStatementsData }) {
 
   const chartRef = useRef(null);
-  const isLocal = false;
-  const localURL = "/graph.json";
-  const jsonURL =
-    "https://mlschuenemann.github.io/tawasol-network/graph.json";
+
+  const graphUrl = "/graph.json";
+  const glossaryUrl = "/glossary.json";
   let globalData;
 
   // Global filters state stored outside React state for now.
@@ -70,13 +69,13 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
   async function fetchData() {
     try {
-      const response = await fetch(isLocal ? localURL : jsonURL);
+      const response = await fetch(graphUrl);
       const data = await response.json();
       globalData = data;
       populateFilters(data);
       updatePlugin(data, filters);
     } catch (error) {
-      console.error("Error fetching the JSON file:", error);
+      console.error("Error fetching the graph.json file:", error);
     }
   }
 
@@ -84,13 +83,14 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
   async function fetchGlossaryData() {
     try {
-      const response = await fetch("https://mlschuenemann.github.io/tawasol-network/glossary.json");
+      const response = await fetch(glossaryUrl);
       const data = await response.json();
       setStatementsData(data.statements || []);
     } catch (error) {
-      console.error("Error fetching the glossary data:", error);
+      console.error("Error fetching the glossary.json file:", error);
     }
   }
+
 
 
   useEffect(() => {
