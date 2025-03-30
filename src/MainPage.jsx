@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Network from "./Network";
 import InfoPanel from "./InfoPanel";
 import Statements from "./Statements";
+import Header from "./Header";
 import './index.css';
 
 const MainPage = () => {
@@ -11,6 +12,7 @@ const MainPage = () => {
   return (
 
     <div className="container mx-auto p-4">
+     <Header />
       {/* Filters Section */}
       <div className="filters flex flex-wrap gap-4 justify-center">
         <select id="location-filter" className="border border-gray-300 rounded p-2">
