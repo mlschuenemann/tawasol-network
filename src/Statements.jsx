@@ -18,7 +18,7 @@ export default function Statements({ title, statements }) {
   }, {});
 
   return (
-    <div id="statements-container" className="space-y-6">
+    <div id="statements" className="space-y-6">
       {Object.entries(groupedByKeyword).map(([keyword, items]) => (
         <div key={keyword}>
           <h4 className="text-lg font-semibold text-gray-800 mb-2 border-b pb-1">

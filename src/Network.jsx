@@ -31,6 +31,8 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     membersSelect.addEventListener("change", onFilterChange);
     directedSelect.addEventListener("change", onFilterChange);
     genreSelect.addEventListener("change", onFilterChange);
+    document.addEventListener("reset-filters", resetFilters);
+
 
     // Cleanup on unmount.
     return () => {
@@ -38,10 +40,40 @@ export default function Network({ onNodeSelect, setStatementsData }) {
       membersSelect.removeEventListener("change", onFilterChange);
       directedSelect.removeEventListener("change", onFilterChange);
       genreSelect.removeEventListener("change", onFilterChange);
+      document.removeEventListener("reset-filters", resetFilters);
+
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function resetFilters() {
+    // Reset filter values
+    const selects = [
+      "location-filter",
+      "members-filter",
+      "directed-to-filter",
+      "genre-filter",
+    ];
+
+    selects.forEach((id) => {
+      const select = document.getElementById(id);
+      if (select) select.value = "";
+    });
+
+    // Clear filters object
+    filters.location = "";
+    filters.size = "";
+    filters.engaged_towards = "";
+    filters.genre = "";
+
+    // Unselect node
+    onNodeSelect(null);
+
+    // Refresh graph
+    updatePlugin(globalData, filters);
+  }
+
 
   async function fetchData() {
     try {
@@ -188,7 +220,7 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
   function chart(data) {
     const width = 2100;
-    const height = 1200;
+    const height = 1800;
     const links = data.links.map((d) => ({ ...d }));
     const nodes = data.nodes.map((d) => ({ ...d }));
 
@@ -199,9 +231,9 @@ export default function Network({ onNodeSelect, setStatementsData }) {
         d3
           .forceLink(links)
           .id((d) => d.id)
-          .distance(300)
+          .distance(200)
       )
-      .force("charge", d3.forceManyBody().strength(-2500))
+      .force("charge", d3.forceManyBody().strength(-1200))
       .force("collide", d3.forceCollide().radius((d) => (d.style?.radius || 10) + 10))
       .force("x", d3.forceX().strength(0.05))
       .force("y", d3.forceY().strength(0.05));
@@ -216,11 +248,27 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
     const g = svg.append("g");
 
-    svg.call(
-      d3.zoom().scaleExtent([0.9, 1.2]).on("zoom", (event) => {
-        g.attr("transform", event.transform);
-      })
-    );
+    const zoom = d3
+    .zoom()
+    .scaleExtent([0.2, 10])
+    .filter((event) => {
+      return !event.ctrlKey && !event.button && (event.type === "wheel" || event.type === "mousedown");
+    })
+    .on("zoom", (event) => {
+      g.attr("transform", event.transform);
+    });
+
+
+     // Set initial zoom
+     const initialScale = 1.8;
+     const centerX = width / 2;
+     const centerY = height / 2;
+
+     svg.call(
+       zoom.transform,
+       d3.zoomIdentity.scale(initialScale)
+     );
+
 
     const link = g
       .append("g")

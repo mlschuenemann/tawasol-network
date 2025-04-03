@@ -69,6 +69,7 @@ export default function InfoPanel({ node }) {
           href={node["web-links"]}
           target="_blank"
           rel="noopener noreferrer"
+          style={{ backgroundColor: "rgb(92, 195, 94)"}}
           className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-700 rounded-full hover:bg-green-800 transition shadow"
         >
 
