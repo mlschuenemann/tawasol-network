@@ -17,9 +17,9 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     genre: "",
   };
 
-  // Fetch data and initialize the chart once after mounting
   useEffect(() => {
     fetchData();
+
     // Also set up filter change event listeners.
     // (If you want to manage these via React, consider adding state instead.)
     const locationSelect = document.getElementById("location-filter");
@@ -34,8 +34,8 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     document.addEventListener("reset-filters", resetFilters);
 
 
-    // Cleanup on unmount.
     return () => {
+
       locationSelect.removeEventListener("change", onFilterChange);
       membersSelect.removeEventListener("change", onFilterChange);
       directedSelect.removeEventListener("change", onFilterChange);
@@ -45,7 +45,9 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
+
 
   function resetFilters() {
     // Reset filter values
@@ -72,6 +74,28 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
     // Refresh graph
     updatePlugin(globalData, filters);
+
+  let globalStatementsData = {};
+
+  async function fetchGlossaryData() {
+    try {
+      const response = await fetch("https://mlschuenemann.github.io/tawasol-network/glossary.json");
+      globalStatementsData = await response.json();
+    } catch (error) {
+      console.error("Error fetching the glossary data:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchGlossaryData();
+  }, []);
+
+  function fetchStatementsForNode(nodeTitle) {
+    return globalStatementsData.statements
+      .filter(statement => statement.collective === nodeTitle)
+      .map(statement => `<div class='statement-category'><strong>${statement.keyword}:</strong> ${statement.content}</div>`)
+      .join("<br>") || "No statements available.";
+
   }
 
 
@@ -113,6 +137,7 @@ export default function Network({ onNodeSelect, setStatementsData }) {
   }
 
   function populateFilters(data) {
+
     const locations = new Set();
     const members = new Set();
     const directedTos = new Set();
@@ -120,9 +145,11 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
 
     data.nodes.forEach((node) => {
+
       if (node.location) locations.add(node.location);
       if (node.size) members.add(node.size);
       if (node.engaged_towards) node.engaged_towards.forEach((engaged) => directedTos.add(engaged));
+
       if (node.genre && Array.isArray(node.genre)) {
         node.genre.forEach((g) => genres.add(g));
       }
@@ -139,23 +166,17 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     directedSelect.innerHTML = `<option value="">All Directed To</option>`;
     genreSelect.innerHTML = `<option value="">All Genres</option>`;
 
-    [...locations].sort().forEach((loc) => {
-      const option = document.createElement("option");
-      option.value = loc;
-      option.textContent = loc;
-      locationSelect.appendChild(option);
+    [...countries].sort().forEach((loc) => {
+      countrySelect.add(new Option(loc, loc));
     });
-    [...members].sort().forEach((mem) => {
-      const option = document.createElement("option");
-      option.value = mem;
-      option.textContent = mem;
-      membersSelect.appendChild(option);
+    [...sizes].sort().forEach((size) => {
+      sizeSelect.add(new Option(size, size));
     });
-    [...directedTos].sort().forEach((dir) => {
-      const option = document.createElement("option");
-      option.value = dir;
-      option.textContent = dir;
-      directedSelect.appendChild(option);
+    [...engagedTowards].sort().forEach((engaged) => {
+      engagedSelect.add(new Option(engaged, engaged));
+    });
+    [...genres].sort().forEach((genre) => {
+      genreSelect.add(new Option(genre, genre));
     });
 
 [...genres].sort().forEach((genre) => {
@@ -171,14 +192,17 @@ export default function Network({ onNodeSelect, setStatementsData }) {
   function onFilterChange(e) {
     const { id, value } = e.target;
 
+
     if (id === "location-filter") {
       filters.location = value;
     } else if (id === "members-filter") {
       filters.size = value;
     } else if (id === "directed-to-filter") {
       filters.engaged_towards = value === "" ? "" : value;
+
     } else if (id === "genre-filter") {
       filters.genre = value;
+
     }
 
 
@@ -188,10 +212,8 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
 
   function updatePlugin(data, filters) {
-    // Remove existing svg if present.
     d3.select(chartRef.current).selectAll("svg").remove();
 
-    // Filter nodes based on filters
     const filteredNodes = data.nodes.filter((d) => {
       const matchLocation = filters.location ? d.location === filters.location : true;
       const matchMembers = filters.size ? d.size === filters.size : true;
@@ -204,23 +226,20 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
 
 
-    // Filter links such that both source and target exist.
     const nodeIds = new Set(filteredNodes.map((n) => n.id));
-    const filteredLinks = data.links
-      ? data.links.filter((l) => nodeIds.has(l.source) && nodeIds.has(l.target))
-      : [];
+    const filteredLinks = data.links.filter((l) => nodeIds.has(l.source) && nodeIds.has(l.target));
 
-    const filteredData = {
-      nodes: filteredNodes,
-      links: filteredLinks,
-    };
+    const filteredData = { nodes: filteredNodes, links: filteredLinks };
 
     chart(filteredData);
   }
 
   function chart(data) {
+
     const width = 2100;
+
     const height = 1800;
+
     const links = data.links.map((d) => ({ ...d }));
     const nodes = data.nodes.map((d) => ({ ...d }));
 
@@ -409,7 +428,9 @@ export default function Network({ onNodeSelect, setStatementsData }) {
   }
 
   function updateInfoPanel(node) {
+
     onNodeSelect(node);
+
   }
 
   function displayNodeStatements(nodeTitle) {
@@ -424,8 +445,10 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     statementsContainer.innerHTML = `<h3>Statements for ${nodeTitle}</h3>${nodeStatements}`;
   }
 
+
   return     <>
   <div id="chart" ref={chartRef} />
 
 </>
+
 }

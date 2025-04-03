@@ -11,9 +11,11 @@ const MainPage = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   return (
+
     <div className="container mx-auto p-4">
       <Header />
       {/* Filters Section */}
+
       <div className="my-4 w-full  mx-auto">
         {/* Toggle button (visible only on mobile) */}
         <button
@@ -64,6 +66,7 @@ const MainPage = () => {
             Reset Filters
           </button>
         </div>
+
       </div>
 
       {/* Responsive Grid Layout */}
