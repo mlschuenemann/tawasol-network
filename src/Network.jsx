@@ -8,6 +8,20 @@ export default function Network({ onNodeSelect, setStatementsData }) {
   const graphUrl = "/graph.json";
   const glossaryUrl = "/glossary.json";
   let globalData;
+  let globalStatementsData = {};
+
+  async function fetchData() {
+    try {
+      const response = await fetch(graphUrl);
+      const data = await response.json();
+      globalData = data;
+      populateFilters(data);
+      updatePlugin(data, filters);
+    } catch (error) {
+      console.error("Error fetching the graph.json file:", error);
+    }
+  }
+
 
   // Global filters state stored outside React state for now.
   const filters = {
@@ -20,8 +34,6 @@ export default function Network({ onNodeSelect, setStatementsData }) {
   useEffect(() => {
     fetchData();
 
-    // Also set up filter change event listeners.
-    // (If you want to manage these via React, consider adding state instead.)
     const locationSelect = document.getElementById("location-filter");
     const membersSelect = document.getElementById("members-filter");
     const directedSelect = document.getElementById("directed-to-filter");
@@ -33,20 +45,15 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     genreSelect.addEventListener("change", onFilterChange);
     document.addEventListener("reset-filters", resetFilters);
 
-
     return () => {
-
       locationSelect.removeEventListener("change", onFilterChange);
       membersSelect.removeEventListener("change", onFilterChange);
       directedSelect.removeEventListener("change", onFilterChange);
       genreSelect.removeEventListener("change", onFilterChange);
       document.removeEventListener("reset-filters", resetFilters);
-
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
   }, []);
+
 
 
   function resetFilters() {
@@ -73,9 +80,9 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     onNodeSelect(null);
 
     // Refresh graph
-    updatePlugin(globalData, filters);
+    updatePlugin(globalData, filters);}
 
-  let globalStatementsData = {};
+
 
   async function fetchGlossaryData() {
     try {
@@ -99,19 +106,6 @@ export default function Network({ onNodeSelect, setStatementsData }) {
   }
 
 
-  async function fetchData() {
-    try {
-      const response = await fetch(graphUrl);
-      const data = await response.json();
-      globalData = data;
-      populateFilters(data);
-      updatePlugin(data, filters);
-    } catch (error) {
-      console.error("Error fetching the graph.json file:", error);
-    }
-  }
-
-  let globalStatementsData = {};
 
   async function fetchGlossaryData() {
     try {
@@ -166,25 +160,33 @@ export default function Network({ onNodeSelect, setStatementsData }) {
     directedSelect.innerHTML = `<option value="">All Directed To</option>`;
     genreSelect.innerHTML = `<option value="">All Genres</option>`;
 
-    [...countries].sort().forEach((loc) => {
-      countrySelect.add(new Option(loc, loc));
+    [...locations].sort().forEach((loc) => {
+      const option = document.createElement("option");
+      option.value = loc;
+      option.textContent = loc;
+      locationSelect.appendChild(option);
     });
-    [...sizes].sort().forEach((size) => {
-      sizeSelect.add(new Option(size, size));
+    [...members].sort().forEach((mem) => {
+      const option = document.createElement("option");
+      option.value = mem;
+      option.textContent = mem;
+      membersSelect.appendChild(option);
     });
-    [...engagedTowards].sort().forEach((engaged) => {
-      engagedSelect.add(new Option(engaged, engaged));
+    [...directedTos].sort().forEach((dir) => {
+      const option = document.createElement("option");
+      option.value = dir;
+      option.textContent = dir;
+      directedSelect.appendChild(option);
     });
     [...genres].sort().forEach((genre) => {
-      genreSelect.add(new Option(genre, genre));
+      const option = document.createElement("option");
+      option.value = genre;
+      option.textContent = genre;
+      genreSelect.appendChild(option);
     });
 
-[...genres].sort().forEach((genre) => {
-  const option = document.createElement("option");
-  option.value = genre;
-  option.textContent = genre;
-  genreSelect.appendChild(option);
-});
+
+
 
 
   }
@@ -447,8 +449,20 @@ export default function Network({ onNodeSelect, setStatementsData }) {
 
 
   return     <>
+  <div className="flex justify-end mb-2">
+    <a
+      href="http://info.collectivise.org/" // <-- Replace this with your actual URL
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-full shadow transition"
+      style={{ backgroundColor: "rgb(92, 195, 94)" }}
+    >
+      About <span className="text-lg">→</span>
+    </a>
+  </div>
+
   <div id="chart" ref={chartRef} />
 
 </>
 
-}
+  }

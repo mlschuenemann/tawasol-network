@@ -99,10 +99,23 @@ const MainPage = () => {
         <h2 className="text-4xl font-medium text-gray-800 text-center mt-24">
           Glossary of Collective Infrastructure
         </h2>
-        <p className="mt-1 text-md text-gray-600 mb-12">
+        <p className="mt-1 text-md text-gray-600 mb-1">
           A shared vocabulary of concepts, practices, and resources shaping
           collective cultural work.
         </p>
+      </div>
+
+      {/* Button below the subtitle */}
+      <div className="flex justify-center mb-12">
+        <a
+          href="http://info.collectivise.org/index.html" // <-- Replace this with your actual link
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-full shadow transition"
+          style={{ backgroundColor: "rgb(92, 195, 94)" }}
+        >
+          Learn more <span className="text-lg">→</span>
+        </a>
       </div>
 
       {/* Statements Section */}
@@ -111,6 +124,18 @@ const MainPage = () => {
         className="p-4 border border-gray-200 bg-white shadow-md rounded-md max-w-5xl mx-auto"
       >
         <Statements title={selectedNode?.title} statements={statementsData} />
+      </div>
+
+      {/* Impressum Button at the Bottom */}
+      <div className="mt-8 text-center">
+        <a
+          href="http://info.collectivise.org/impressum.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-gray-600 underline hover:text-gray-800 transition"
+        >
+          Impressum
+        </a>
       </div>
 
       {/* Scroll-to-Glossary Button */}
