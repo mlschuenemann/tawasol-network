@@ -108,7 +108,7 @@ const MainPage = () => {
       {/* Button below the subtitle */}
       <div className="flex justify-center mb-12">
         <a
-          href="https://example.com" // <-- Replace this with your actual link
+          href="http://info.collectivise.org/index.html" // <-- Replace this with your actual link
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-full shadow transition"
