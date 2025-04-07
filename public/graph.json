@@ -29,7 +29,7 @@
       "size": "Individual Practitioner",
       "engaged_towards": ["Ressource"],
       "description": "Independent cultural producer who has worked and works with several collectives in Tunis and abroad. Specialized in the local environment & the mechanisms of community spaces.",
-      "genre": ["Community Engagement"],
+      "genre": ["Community"],
       "resource_origin": "Grants / Comercial Practice",
       "style": {
         "radius": 30,
@@ -176,7 +176,7 @@
       "size": "2-10",
       "engaged_towards": ["Ressource", "Community", "Artistic Practice"],
       "description": "Artists residency space. Support the local art scene by offering a space for creation, experimentation, mentoring, peer-to-peer learning and feedback. Fosters networking opportunities, connecting local art scene to international scenes. ",
-      "genre": ["Fine Art",  "Suport and Network", "Music", "Community Engagement"],
+      "genre": ["Fine Art",  "Suport and Network", "Music", "Community"],
       "resource_origin": "Grants / Comercial Practice",
       "style": {
         "radius": 30,
