@@ -425,6 +425,18 @@ export default function Network({ onNodeSelect, setStatementsData }) {
   }
 
   return     <>
+  <div className="flex justify-end mb-2">
+    <a
+      href="http://info.collectivise.org/" // <-- Replace this with your actual URL
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-full shadow transition"
+      style={{ backgroundColor: "rgb(92, 195, 94)" }}
+    >
+      About <span className="text-lg">→</span>
+    </a>
+  </div>
+
   <div id="chart" ref={chartRef} />
 
 </>
